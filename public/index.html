@@ -5,19 +5,37 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <div id="options">
-            <button id="toggleNotifs"><span>Notifications Off</span></button>
-            <form id="nameForm" action="">
-                Display Name: <input id="name" /><button>Change</button>
-            </form>
-        </div>
-        <div id="chat">
-            <div id="messageContainer">
-                <ul id="messages"></ul>
+        <div class="row">
+            <div class="col-md-2">
+                <button type="button" id="toggleNotifs" class="btn btn-default"><span>Notifications Off</span></button>
             </div>
-            <div id="chatFormContainer">
+            <div class="col-md-2 col-md-offset-3">
+                <form id="nameForm" action="">
+                    <div class="input-group">
+                        <input type="text" id="name" class="form-control" placeholder="Display Name">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Set</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px; margin-bottom:20px;">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="messageContainer">
+                    <ul class="list-group" id="messages"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="position: fixed; bottom: 30px;">
+            <div class="col-md-4 col-md-offset-4">
                 <form id="chatForm" action="">
-                    <input id="msg" autocomplete="off" /><button>Send</button>
+                    <div class="input-group">
+                        <input type="text" id="msg" autocomplete="off" class="form-control" placeholder="Message">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Send</button>
+                        </span>
+                    </div>
                 </form>
             </div>
         </div>
@@ -62,8 +80,12 @@
             socket.on('clientConnect', function(data) {
                 var id = data.id;
                 var name = data.name;
+<<<<<<< HEAD
                 $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
                 $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
+=======
+                $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
+>>>>>>> pr/1
             });
 
             socket.on('nameChange', function(data) {
@@ -77,8 +99,12 @@
                 var id = data.id;
                 var name = data.name;
                 var msg = data.msg;
+<<<<<<< HEAD
                 $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
                 $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
+=======
+                $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
+>>>>>>> pr/1
 
                 if (notifsOn) {
                     notif.play();
@@ -88,8 +114,12 @@
             socket.on('clientDisconnect', function(data) {
                 var id = data.id;
                 var name = data.name;
+<<<<<<< HEAD
                 $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
                 $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
+=======
+                $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
+>>>>>>> pr/1
             });
         </script>
     </body>
