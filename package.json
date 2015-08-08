@@ -1,0 +1,9 @@
+{
+  "name": "customcah",
+  "version": "0.0.1",
+  "description": "A customizable version of Cards Against Humanity.",
+  "dependencies": {
+    "express": "latest",
+    "socket.io": "latest"
+  }
+}
