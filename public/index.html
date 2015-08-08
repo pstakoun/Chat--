@@ -2,7 +2,24 @@
     <head>
         <title>Chat--</title>
 
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <style>
+            body {
+                padding-top: 30px;
+                padding-left: 30px;
+                padding-bottom: 30px;
+                padding-right: 30px;
+            }
+            [data-id] {
+                font-weight: bolder;
+            }
+            #messageContainer {
+                word-wrap: break-word;
+            }
+        </style>
     </head>
     <body>
         <div class="row">
@@ -69,10 +86,10 @@
 
             $('#toggleNotifs').click(function() {
                 if (notifsOn) {
-                    $('#toggleNotifs > span').html('Notifications On');
+                    $('#toggleNotifs').html('Notifications On');
                     notifsOn = false;
                 } else {
-                    $('#toggleNotifs > span').html('Notifications Off');
+                    $('#toggleNotifs').html('Notifications Off');
                     notifsOn = true;
                 }
             });
@@ -80,12 +97,9 @@
             socket.on('clientConnect', function(data) {
                 var id = data.id;
                 var name = data.name;
-<<<<<<< HEAD
                 $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
                 $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
-=======
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
->>>>>>> pr/1
             });
 
             socket.on('nameChange', function(data) {
@@ -99,12 +113,9 @@
                 var id = data.id;
                 var name = data.name;
                 var msg = data.msg;
-<<<<<<< HEAD
                 $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
                 $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
-=======
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
->>>>>>> pr/1
 
                 if (notifsOn) {
                     notif.play();
@@ -114,12 +125,9 @@
             socket.on('clientDisconnect', function(data) {
                 var id = data.id;
                 var name = data.name;
-<<<<<<< HEAD
                 $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
                 $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
-=======
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
->>>>>>> pr/1
             });
         </script>
     </body>
