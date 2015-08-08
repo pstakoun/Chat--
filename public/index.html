@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+    <head>
+        <title>Chat</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="options">
+            <button id="toggleNotifs"><span>Notifications Off</span></button>
+            <form id="nameForm" action="">
+                Display Name: <input id="name" /><button>Change</button>
+            </form>
+        </div>
+        <div id="chat">
+            <div id="messageContainer">
+                <ul id="messages"></ul>
+            </div>
+            <div id="chatFormContainer">
+                <form id="chatForm" action="">
+                    <input id="msg" autocomplete="off" /><button>Send</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+        <script>
+            function toText(html) {
+                var tmp = document.createElement('div');
+                tmp.innerHTML = html;
+                return tmp.textContent || tmp.innerText || "";
+            }
+
+            var socket = io();
+
+            var notifsOn = true;
+            var notif = new Audio('notif.mp3');
+
+            $('#nameForm').submit(function() {
+                socket.emit('name', $('#name').val());
+                $('#name').val($('#name').val().trim());
+                return false;
+            });
+
+            $('#chatForm').submit(function() {
+                socket.emit('message', $('#msg').val());
+                $('#msg').val('');
+                return false;
+            });
+
+            $('#toggleNotifs').click(function() {
+                if (notifsOn) {
+                    $('#toggleNotifs > span').html('Notifications On');
+                    notifsOn = false;
+                } else {
+                    $('#toggleNotifs > span').html('Notifications Off');
+                    notifsOn = true;
+                }
+            });
+
+            socket.on('clientConnect', function(data) {
+                var id = data.id;
+                var name = data.name;
+                $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
+            });
+
+            socket.on('nameChange', function(data) {
+                var id = data.id;
+                var name = data.name;
+                var sentMessages = $('span[data-id="'+id+'"]');
+                sentMessages.html(toText((name.length > 0) ? name : id));
+            });
+
+            socket.on('message', function(data) {
+                var id = data.id;
+                var name = data.name;
+                var msg = data.msg;
+                $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
+
+                if (notifsOn) {
+                    notif.play();
+                }
+            });
+
+            socket.on('clientDisconnect', function(data) {
+                var id = data.id;
+                var name = data.name;
+                $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
+            });
+        </script>
+    </body>
+</html>
