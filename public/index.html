@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <head>
-        <title>Chat</title>
+        <title>Chat--</title>
 
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
@@ -63,6 +63,7 @@
                 var id = data.id;
                 var name = data.name;
                 $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
+                $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
             });
 
             socket.on('nameChange', function(data) {
@@ -77,6 +78,7 @@
                 var name = data.name;
                 var msg = data.msg;
                 $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
+                $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
 
                 if (notifsOn) {
                     notif.play();
@@ -87,6 +89,7 @@
                 var id = data.id;
                 var name = data.name;
                 $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
+                $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
             });
         </script>
     </body>
