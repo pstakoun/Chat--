@@ -25,6 +25,7 @@ button {
     top: 50%;
     transform: translateY(-50%);
     float: left;
+    width: 138px;
 }
 
 #chat {
@@ -56,7 +57,6 @@ button {
     padding-left: 2%;
     padding-right: 2%;
     margin-top: 1.5%;
-    margin-bottom: 1.5%;
 }
 
 #messages li {
