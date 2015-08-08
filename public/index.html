@@ -4,7 +4,9 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
 
         <style>
             body {
@@ -24,14 +26,14 @@
     <body>
         <div class="row">
             <div class="col-md-2">
-                <button type="button" id="toggleNotifs" class="btn btn-default"><span>Notifications Off</span></button>
+                <button type="button" id="toggleNotifs" class="btn btn-default">Notifications Off</button>
             </div>
             <div class="col-md-2 col-md-offset-3">
                 <form id="nameForm" action="">
                     <div class="input-group">
                         <input type="text" id="name" class="form-control" placeholder="Display Name">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Set</button>
+                            <button class="btn btn-default" type="submit">Set</button>
                         </span>
                     </div>
                 </form>
@@ -50,15 +52,12 @@
                     <div class="input-group">
                         <input type="text" id="msg" autocomplete="off" class="form-control" placeholder="Message">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Send</button>
+                            <button class="btn btn-default" type="submit">Send</button>
                         </span>
                     </div>
                 </form>
             </div>
         </div>
-
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.js"></script>
 
         <script>
             function toText(html) {
@@ -97,7 +96,6 @@
             socket.on('clientConnect', function(data) {
                 var id = data.id;
                 var name = data.name;
-                $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
                 $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
             });
@@ -113,7 +111,6 @@
                 var id = data.id;
                 var name = data.name;
                 var msg = data.msg;
-                $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
                 $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
 
@@ -125,8 +122,7 @@
             socket.on('clientDisconnect', function(data) {
                 var id = data.id;
                 var name = data.name;
-                $('#messages').append($('<li>').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
-                $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
+                s$('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
             });
         </script>
