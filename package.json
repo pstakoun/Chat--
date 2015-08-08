@@ -1,7 +1,7 @@
 {
-  "name": "customcah",
+  "name": "chat--",
   "version": "0.0.1",
-  "description": "A customizable version of Cards Against Humanity.",
+  "description": "An elementary chat application.",
   "dependencies": {
     "express": "latest",
     "socket.io": "latest"
