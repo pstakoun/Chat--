@@ -101,7 +101,7 @@
             socket.on('clientConnect', function(data) {
                 var id = data.id;
                 var name = data.name;
-                $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
+                $('.panel').scrollTop($('.panel')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
             });
 
@@ -116,7 +116,7 @@
                 var id = data.id;
                 var name = data.name;
                 var msg = data.msg;
-                $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
+                $('.panel').scrollTop($('.panel')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
 
                 if (notifsOn) {
@@ -127,7 +127,7 @@
             socket.on('clientDisconnect', function(data) {
                 var id = data.id;
                 var name = data.name;
-                s$('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
+                s$('.panel').scrollTop($('.panel')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
             });
         </script>
