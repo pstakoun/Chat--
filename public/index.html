@@ -33,7 +33,7 @@
     <body>
         <div class="row">
             <div class="col-md-2">
-                <button type="button" id="toggleNotifs" class="btn btn-default active">Notifications Off</button>
+                <button type="button" id="toggleNotifs" class="btn btn-default">Notifications Off</button>
             </div>
             <div class="col-md-2 col-md-offset-3">
                 <form id="nameForm" action="">
@@ -94,11 +94,9 @@
             $('#toggleNotifs').click(function() {
                 if (notifsOn) {
                     $('#toggleNotifs').html('Notifications On');
-                    $('#toggleNotifs').className = "btn btn-default active";
                     notifsOn = false;
                 } else {
                     $('#toggleNotifs').html('Notifications Off');
-                    $('#toggleNotifs').className = "btn btn-default";
                     notifsOn = true;
                 }
             });
