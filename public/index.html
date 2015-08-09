@@ -116,8 +116,8 @@
                 var id = data.id;
                 var name = data.name;
                 var msg = data.msg;
-                $('.panel').scrollTop($('.panel')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
+                $('.panel').scrollTop($('.panel')[0].scrollHeight);
 
                 if (notifsOn) {
                     notif.play();
