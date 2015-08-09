@@ -14,11 +14,15 @@
                 padding-left: 30px;
                 padding-bottom: 30px;
                 padding-right: 30px;
+                overflow-y:hidden;
             }
             [data-id] {
                 font-weight: bolder;
             }
-            #messageContainer {
+            .scrollable-list {
+                height: auto;
+                max-height: 77vh;
+                overflow-x: hidden;
                 word-wrap: break-word;
             }
         </style>
@@ -41,8 +45,9 @@
         </div>
         <div class="row" style="margin-top:20px; margin-bottom:20px;">
             <div class="col-md-6 col-md-offset-3">
-                <div id="messageContainer">
-                    <ul class="list-group" id="messages"></ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Messages</div>
+                    <ul class="list-group scrollable-list" id="messages"></ul>
                 </div>
             </div>
         </div>
@@ -96,8 +101,8 @@
             socket.on('clientConnect', function(data) {
                 var id = data.id;
                 var name = data.name;
-                $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
+                $('.scrollable-list').scrollTop($('.scrollable-list')[0].scrollHeight);
             });
 
             socket.on('nameChange', function(data) {
@@ -111,8 +116,8 @@
                 var id = data.id;
                 var name = data.name;
                 var msg = data.msg;
-                $('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
+                $('.scrollable-list').scrollTop($('.scrollable-list')[0].scrollHeight);
 
                 if (notifsOn) {
                     notif.play();
@@ -122,8 +127,8 @@
             socket.on('clientDisconnect', function(data) {
                 var id = data.id;
                 var name = data.name;
-                s$('#messageContainer').scrollTop($('#messageContainer')[0].scrollHeight);
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
+                $('.scrollable-list').scrollTop($('.scrollable-list')[0].scrollHeight);
             });
         </script>
     </body>
