@@ -14,11 +14,15 @@
                 padding-left: 30px;
                 padding-bottom: 30px;
                 padding-right: 30px;
+                overflow-y:hidden;
             }
             [data-id] {
                 font-weight: bolder;
             }
-            #messageContainer {
+            .scrollable-list {
+                height: auto;
+                max-height: 77vh;
+                overflow-x: hidden;
                 word-wrap: break-word;
             }
         </style>
@@ -41,8 +45,9 @@
         </div>
         <div class="row" style="margin-top:20px; margin-bottom:20px;">
             <div class="col-md-6 col-md-offset-3">
-                <div id="messageContainer">
-                    <ul class="list-group" id="messages"></ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Messages</div>
+                    <ul class="list-group scrollable-list" id="messages"></ul>
                 </div>
             </div>
         </div>
