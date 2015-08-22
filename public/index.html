@@ -48,15 +48,21 @@
             </div>
         </div>
         <div class="row" style="margin-top:20px; margin-bottom:20px;">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-6 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Messages</div>
                     <ul class="list-group scrollable-list" id="messages"></ul>
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Connected Clients</div>
+                    <ul class="list-group scrollable-list" id="clients"></ul>
+                </div>
+            </div>
         </div>
         <div class="row" style="position: fixed; bottom: 30px;">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-6 col-md-offset-2">
                 <form id="chatForm" action="">
                     <div class="input-group">
                         <input type="text" id="msg" autocomplete="off" class="form-control" placeholder="Message">
@@ -102,18 +108,31 @@
                 }
             });
 
+            socket.on('connect', function(names) {
+                if (names !== undefined) {
+                    for (var i = 0; i < names.length; i++) {
+                        if (names[i] !== undefined) {
+                            var id = i;
+                            var name = names[i];
+                            $('#clients').append($('<li class="list-group-item" data-id="'+id+'">').html(toText((name.length > 0) ? name : id)));
+                        }
+                    }
+                }
+            });
+
             socket.on('clientConnect', function(data) {
                 var id = data.id;
                 var name = data.name;
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> connected.'));
-                $('.scrollable-list').scrollTop($('.scrollable-list')[0].scrollHeight);
+                $('#messages').scrollTop($('#messages')[0].scrollHeight);
+                $('#clients').append($('<li class="list-group-item" data-id="'+id+'">').html(toText((name.length > 0) ? name : id)));
             });
 
             socket.on('nameChange', function(data) {
                 var id = data.id;
                 var name = data.name;
-                var sentMessages = $('span[data-id="'+id+'"]');
-                sentMessages.html(toText((name.length > 0) ? name : id));
+                var mentions = $('[data-id="'+id+'"]');
+                mentions.html(toText((name.length > 0) ? name : id));
             });
 
             socket.on('message', function(data) {
@@ -121,7 +140,7 @@
                 var name = data.name;
                 var msg = data.msg;
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span><b>:</b> ' + toText(msg)));
-                $('.scrollable-list').scrollTop($('.scrollable-list')[0].scrollHeight);
+                $('#messages').scrollTop($('#messages')[0].scrollHeight);
 
                 if (notifsOn) {
                     notif.play();
@@ -132,7 +151,8 @@
                 var id = data.id;
                 var name = data.name;
                 $('#messages').append($('<li class="list-group-item">').html('<span data-id="'+id+'">' + toText((name.length > 0) ? name : id) + '</span> disconnected.'));
-                $('.scrollable-list').scrollTop($('.scrollable-list')[0].scrollHeight);
+                $('#messages').scrollTop($('#messages')[0].scrollHeight);
+                $('li[data-id="'+id+'"]').remove();
             });
         </script>
     </body>

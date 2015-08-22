@@ -14,6 +14,7 @@ http.listen(port, function() {
 });
 
 var idIndex = 0;
+var clientNames = [];
 
 io.on('connection', function(socket)
 {
@@ -21,13 +22,18 @@ io.on('connection', function(socket)
     var name = "";
     var address = socket.handshake.address;
 
+    socket.emit('connect', clientNames);
+
     console.log('Client on ' + address + ' connected, assigned ID ' + id);
     io.emit('clientConnect', { id: id, name: name });
+
+    clientNames[id] = name;
 
     socket.on('name', function(str) {
         name = str.trim();
         console.log('Client with ID ' + id + ' changed display name to: ' + name);
         io.emit('nameChange', { id: id, name: name });
+        clientNames[id] = name;
     });
 
     socket.on('message', function(msg) {
@@ -38,5 +44,6 @@ io.on('connection', function(socket)
     socket.on('disconnect', function() {
         console.log('Client on ' + address + ' with ID ' + id + ' disconnected');
         io.emit('clientDisconnect', { id: id, name: name});
+        clientNames[id] = undefined;
     });
 });
