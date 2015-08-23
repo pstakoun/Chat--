@@ -22,7 +22,8 @@ io.on('connection', function(socket)
     var name = "";
     var address = socket.handshake.address;
 
-    socket.emit('connect', clientNames);
+    socket.emit('thisConnect', clientNames);
+    console.log(clientNames);
 
     console.log('Client on ' + address + ' connected, assigned ID ' + id);
     io.emit('clientConnect', { id: id, name: name });
