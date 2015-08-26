@@ -109,9 +109,9 @@
             });
 
             socket.on('thisConnect', function(names) {
-                if (names !== undefined) {
+                if (names) {
                     for (var i = 0; i < names.length; i++) {
-                        if (names[i] !== undefined) {
+                        if (names[i]) {
                             var id = i;
                             var name = names[i];
                             $('#clients').append($('<li class="list-group-item" data-id="'+id+'">').html(toText((name.length > 0) ? name : id)));
